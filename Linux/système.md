@@ -75,3 +75,11 @@ find / -type f -exec grep -l "chaine" {} \;
 ## Forcer le chargement de GRUB au démarrage d'Ubuntu
 
 Il suffit, au moment du chargement du système, d’appuyer sur shift (ou parfois sur échappement, apparemment) et de garder la touche appuyée jusqu’à l’apparition de l’écran GRUB.
+
+## Effacer irrémédiablement les données de tout un disque dur
+
+```
+shred -fvz -n 5 /dev/sda
+```
+
+Où `/dev/sda` est bien entendu le disque que l’on souhaite effacer. `-f` change automatiquement les droits sur les fichiers pour pouvoir effectuer l’opération, `-v` désigne un mode *verbose* bien utile pour afficher la progression de cette très longue opération, `-n 5` fixe le nombre de passes (à ajuster suivant le niveau de paranoïa).
