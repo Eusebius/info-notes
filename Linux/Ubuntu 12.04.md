@@ -1,4 +1,4 @@
- # Linux / configuration
+ # Linux / Ubuntu 12.04
 
 ## Réactiver le clic à trois doigts sur un *touchpad*
 
