@@ -65,3 +65,9 @@ touch -t [[YY]YY]MMDDhhmm[.ss] nomFichier
 ```
 
 Par exemple, si l’on souhaite fixer la date de modification du fichier foobar au premier mars de l’année courante à 20h42 : `touch -t 03012042 foobar`
+
+## find / grep : lister tous les fichiers contenant une chaîne donnée
+
+```bash
+find / -type f -exec grep -l "chaine" {} \;
+```
