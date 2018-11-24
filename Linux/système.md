@@ -32,3 +32,20 @@ $sudo update-grub
 ```
 
 Référence : [error:: no video mode activated](https://bugs.launchpad.net/ubuntu/+source/grub2/+bug/699802)
+
+## Changer le mot de passe d'un volume LVM chiffré
+
+On suppose que le volume chiffré est sur `/dev/sda5`. Il faut d’abord utiliser la commande suivante pour ajouter un nouveau mot de passe sur un des 8 slots de LUKS :
+
+```bash
+cryptsetup -v luksAddKey /dev/sda5
+```
+
+On commence par donner le mot de passe initial, LUKS identifie le numéro de slot sur lequel il est enregistré (supposons 0), à condition d’avoir utilisé l’option `-v`.
+LUKS demande alors un nouveau mot de passe, qui sera attribué à un nouveau slot. Il faut alors détruire l’ancien slot (0) pour annuler l’ancien mot de passe :
+
+```bash
+cryptsetup -v luksKillSlot /dev/sda5 0
+```
+
+Il faut pour cela fournir le nouveau mot de passe, ou encore tout autre mot de passe valide sur un slot autre que 0. Après cette opération seul le nouveau mot de passe (et tous les autres qui pourraient éventuellement préexister) demeure valide.
