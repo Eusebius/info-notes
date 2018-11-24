@@ -71,3 +71,7 @@ Par exemple, si l’on souhaite fixer la date de modification du fichier foobar 
 ```bash
 find / -type f -exec grep -l "chaine" {} \;
 ```
+
+## Forcer le chargement de GRUB au démarrage d'Ubuntu
+
+Il suffit, au moment du chargement du système, d’appuyer sur shift (ou parfois sur échappement, apparemment) et de garder la touche appuyée jusqu’à l’apparition de l’écran GRUB.
