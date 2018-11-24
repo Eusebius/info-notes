@@ -44,3 +44,13 @@ Dans Wireshark, on peut ensuite filtrer le type de trame avec des filtres de typ
 * 11 : *Authentication*
 * 12 : *Deauthentication*
 
+## OpenVPN : pousser une config DNS sur un client Linux
+
+Sur un client Linux, il ne suffit pas que le serveur envoie un message de configuration `push DNS` pour que la configuration réseau de la machine soit affectée. Il faut que le programme `update-resolv-conf` (dans le répertoire de configuration d’OpenVPN du client) mette à jour le fichier `/etc/resolv.conf` à l’ouverture et à la fermeture du tunnel.
+Pour cela, il faut ajouter à la fin du fichier de configuration `client.conf` :
+
+```
+script-security 3 # niveau au moins >= 2
+up /etc/update-resolv-conf
+down /etc/update-resolv-conf
+```
