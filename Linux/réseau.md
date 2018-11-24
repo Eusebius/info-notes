@@ -18,3 +18,29 @@ ln -s /dev/null /etc/systemd/network/99-default.link
 Un redémarrage est ensuite (sans doute) nécessaire.
 
 Source : [Stretch wifi error](https://www.reddit.com/r/debian/comments/5tdp8q/stretch_wifi_error/)
+
+## Capturer les trames d'administration wifi
+
+Avant de collecter ces trames, par exemple pour récupérer les trames *probe request*, il faut d’abord passer la carte wifi en mode *monitoring*. Ça peut se faire avec `airmon-ng` (`airmon-ng start wlan0`), ou bien sans :
+
+```bash
+sudo iw dev wlan0 interface add mon0 type monitor
+ifconfig mon0 up
+```
+
+Puis capture, avec filtrage sur les trames de management :
+
+```bash
+tcpdump -i mon0 type mgt
+```
+
+Dans Wireshark, on peut ensuite filtrer le type de trame avec des filtres de type `wlan.fc.type_subtype eq n`, où n a la signification suivante :
+
+* 0 : *Association request*
+* 1 : *Association response*
+* 4 : *Probe request*
+* 5 : *Probe response*
+* 8 : *Beacon*
+* 11 : *Authentication*
+* 12 : *Deauthentication*
+
