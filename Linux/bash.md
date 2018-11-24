@@ -25,3 +25,15 @@ Dans certaines distributions, il y a un bug dans le fichier de paramétrage de l
 Le bug se corrige facilement en replaçant `-o default` par `-o filenames` à la ligne 1587 du fichier `/etc/bash_completion`.
 
 Source : [Bash completion add extra space char](https://answers.launchpad.net/ubuntu/+source/bash-completion/+question/155411)
+
+## Convertir l'encodage de fichiers (`.tex` par exemple)
+
+Pour convertir de `Latin1` en `UTF-8` tous les fichiers `*.tex` du répertoire courant :
+
+```bash
+for i in *.tex; \
+  do iconv -f iso8859-1 -t utf8 $i -o utf_$i; \
+  rm $i; \
+  mv utf_$i $i; \
+done
+```
