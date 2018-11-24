@@ -49,3 +49,12 @@ cryptsetup -v luksKillSlot /dev/sda5 0
 ```
 
 Il faut pour cela fournir le nouveau mot de passe, ou encore tout autre mot de passe valide sur un slot autre que 0. Après cette opération seul le nouveau mot de passe (et tous les autres qui pourraient éventuellement préexister) demeure valide.
+
+## Lire des DVD avec CSS sous Ubuntu
+
+Par défaut, les bibliothèques CSS permettant de déchiffrer les DVD protégés ainsi ne sont pas installées sous Ubuntu (ou Debian), parce qu’elles ne sont pas libres. Par contre, le package `libdvdread4` (ou son successeur) inclut un script d’installation de ces bibliothèques. La commande suivante permet leur installation :
+
+```bash
+sudo /usr/share/doc/libdvdread4/install-css.sh
+```
+
