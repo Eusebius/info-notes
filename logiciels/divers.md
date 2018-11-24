@@ -33,3 +33,14 @@ Contenu du fichier (le code est en réalité sur une seule ligne) :
 ```
 sudo udevadm control –reload-rules
 ```
+
+## Installer Altera Quartus sous Linux
+
+Je viens de rencontrer quelques soucis mineurs à l’installation de ce logiciel. Je ne prétends pas avoir cerné tous les problèmes ni avoir les meilleures solutions qui soient, mais je vais tout de même noter ce qui m’a aidé...
+
+* Le script d’installation est un `.sh`, mais il faut bien le lancer avec `/bin/bash ./blabla.sh`, sinon ça foire. Même comme ça, il finit par s’arrêter sur une erreur, après avoir décompressé ses fichiers dans un répertoire temporaire. Il suffit alors d’aller dans ledit répertoire et de lancer `/bin/bash ./setup.sh` ;
+* J’ai installé le logiciel en `root` dans `/usr/share`. C’est peut-être la cause du problème suivant : Quartus ne semble pas apprécier être lancé via un lien symbolique venant d’un autre répertoire. Le `ln -s /.../quartus /usr/bin/quartus` ne fonctionne donc pas. J’ai plutôt créé un micro-script `/usr/bin/quartus` avec le contenu suivant :
+
+  #!/bin/bash
+  /bin/bash /usr/share/altera/.../quartus/bin/quartus
+
