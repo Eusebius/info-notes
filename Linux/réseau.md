@@ -1,6 +1,6 @@
 # Linux / Réseau
 
-##Noms d’interfaces wifi trop longs : « aborting authentication by local choice » et « DEAUTH_LEAVING »
+## Noms d’interfaces wifi trop longs : « aborting authentication by local choice » et « DEAUTH_LEAVING »
 
 Sous un Linux utilisant systemd, une interface wifi peut échouer à se connecter en restant un moment au stade « configuration de l’interface » (tel qu’affiché dans les widgets francophones de NetworkManager). Dans `/var/log/syslog`, on peut voir des choses du genre :
 
