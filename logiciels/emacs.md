@@ -7,3 +7,9 @@
 ```Lisp
 (setq inhibit-startup-screen t)
 ```
+
+## Changer de mode majeur
+
+```
+M-x nomMode
+```
