@@ -1,5 +1,79 @@
  # Linux / système
 
+## Installer un *timer* pour un utilisateur non privilégié
+
+Pour installer un *timer* lançant un service, il faut un fichier
+`.timer` et un fichier `.service`. Normalement, ces fichiers vont dans
+`/etc/systemd/system`, mais un utilisateur non privilégié peut définir
+lui-même un *timer* et/ou un service en les mettant dans
+`~/.config/systemd/user`.
+
+Dans l'exemple, nous cherchons, plutôt qu'à lancer un service en mode
+démon, à exécuter un script périodiquement, à la mode `cron`.
+
+### Exemple simple de fichier `.service`
+
+```
+[Unit]
+Description=description du service
+Wants=nomChoisi.timer
+
+[Service]
+ExecStart=/chemin/vers/le/script
+WorkingDirectory=/chemin/vers/le/repertoire
+
+[Install]
+WantedBy=default.target
+```
+
+Ici le service sera lancé par le *timer* `nomChoisi.timer`.
+
+### Exemple simple de fichier `.timer`
+
+```
+[Unit]
+Description=description du service
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+`OnCalendar=weekly` signifie que le *timer* sera activé tous les lundi
+à minuit. `Persistent=true` signifie que si le *timer* « rate » son
+créneau (parce que la machine est éteinte par exemple), il s'activera
+dès que possible.
+
+### Installation du *timer* et du service
+
+L'option `--user` de `systemctl` permet de gérer les aspects de
+systemd qui sont spécifiques à l'utilisateur courant. C'est cela qui
+permet aux utilisateurs non privilégiés d'installer services et
+*timers*.
+
+Pour installer notre service et le *timer* associé :
+```
+systemctl --user daemon-reload
+systemctl --user enable nomChoisi.service
+systemctl --user enable nomChoisi.timer
+```
+
+* Pour lister les *timers* du système : `systemctl list-timers`
+* Pour lister les *timers* de l'utilisateur courant : `systemctl
+  --user list-timers`
+* Pour obtenir l'état d'un *timer* : `systemctl [--user] status
+nomTimer.timer`
+
+Références :
+
+* [Using systemd as a better cron](https://medium.com/horrible-hacks/using-systemd-as-a-better-cron-a4023eea996d)
+* [Managing services for non-root users with systemd](https://vic.demuzere.be/articles/using-systemd-user-units/)
+* [systemd/User](https://wiki.archlinux.org/index.php/Systemd/User)
+* [systemd/Timers](https://wiki.archlinux.org/index.php/Systemd/Timers)
+
 ## Raccourcis clavier utiles
 
 * `Ctrl + Alt + Fn` : bascule sur le terminal n (7 pour l’interface X)
